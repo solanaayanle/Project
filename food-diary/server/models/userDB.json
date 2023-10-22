@@ -1,0 +1,18 @@
+{
+    "users": [
+      { 
+        "id": 1,
+        "firstName": "Mina",
+        "lastName": "Bina",
+        "email": "a@b.com",
+        "username": "1",
+        "password": "2",
+        "dob": "01/01/2000",
+        "gender": "Female",
+        "height": "160 cm",
+        "weight": "55 kg",
+        "calorieGoal": "1200",
+        "unit": "Metric"
+    }
+    ]
+  }

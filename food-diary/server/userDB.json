@@ -1,0 +1,32 @@
+{
+  "users": [
+    { 
+      "id": 1,
+      "firstName": "Mina",
+      "lastName": "Bina",
+      "email": "a@b.com",
+      "username": "1",
+      "password": "2",
+      "dob": "01/01/2000",
+      "gender": "Female",
+      "height": "160 cm",
+      "weight": "55 kg",
+      "calorieGoal": "1200",
+      "unit": "Metric"
+  },
+  { 
+      "id": 3,
+      "firstName": "Bina",
+      "lastName": "Nina",
+      "email": "C@b.com",
+      "username": "2",
+      "password": "3",
+      "dob": "01/03/2000",
+      "gender": "Female",
+      "height": "120 cm",
+      "weight": "53 kg",
+      "calorieGoal": "1200",
+      "unit": "Metric"
+  }
+  ]
+}
