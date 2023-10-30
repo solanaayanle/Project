@@ -1,6 +1,9 @@
 import { useState } from "react";
+import InputUnit from "../assets/InputUnit";
+import InputField from "../assets/InputField";
+import UnitToggleButton from "../assets/UnitToggleButton";
+import SelectField from "../assets/SelectField";
 
-// eslint-disable-next-line react/prop-types
 function UserRegistrationModal() {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
@@ -11,231 +14,139 @@ function UserRegistrationModal() {
     calories: "",
     lifestyle: "",
     weight: "",
+    unit: "Metric",
   });
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
+  const [selectedValue, setSelectedValue] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (step < 5) {
+    if (step < 3) {
       setStep(step + 1);
     } else {
-      // Handle final registration submission
-      // Send formData to the server or perform any necessary actions
       console.log(formData);
     }
   };
 
+  const handleUnitChange = (newUnit) => {
+    setFormData({ ...formData, unit: newUnit });
+  };
+
+  const onSelectChange = (event) => {
+    setSelectedValue(event.target.value);
+    setFormData({ ...formData, lifestyle: e.target.value });
+  };
+
+  const lifestyleOptions = [
+    { value: "notActive", label: "Sedentary / Light Activity" },
+    { value: "active", label: "Moderately Active" },
+    { value: "veryActive", label: "Heavy Activity" },
+  ];
+
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-50">
-      <div className="bg-white p-6 rounded-lg shadow-lg">
+    <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-100 bg-opacity-80">
+      <div className="bg-white w-96 p-6 rounded-lg shadow-lg">
         <button className="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
           Close
         </button>
         <form onSubmit={handleSubmit} className="space-y-4">
           {step === 1 && (
             <>
-              <div className="mb-4">
-                <label
-                  htmlFor="firstName"
-                  className="block text-gray-700 text-lg font-medium"
-                >
-                  First Name
-                </label>
-                <input
-                  type="text"
-                  id="firstName"
+              <div className="space-y-4">
+                <InputField
+                  label="First Name"
                   name="firstName"
-                  value={formData.firstName}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg text-lg focus:ring-2 focus:ring-blue-400"
-                  placeholder="Your First Name"
-                />
-              </div>
-              <div className="mb-4">
-                <label
-                  htmlFor="lastName"
-                  className="block text-gray-700 text-lg font-medium"
-                >
-                  Last Name
-                </label>
-                <input
                   type="text"
-                  id="lastName"
+                  placeholder="First Name"
+                />
+                <InputField
+                  label="Last Name"
                   name="lastName"
-                  value={formData.lastName}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg text-lg focus:ring-2 focus:ring-blue-400"
-                  placeholder="Your Last Name"
-                />
-              </div>
-              <div className="mb-4">
-                <label
-                  htmlFor="email"
-                  className="block text-gray-700 text-lg font-medium"
-                >
-                  Email Address
-                </label>
-                <input
                   type="text"
-                  id="email"
+                  placeholder="Last Name"
+                />
+                <InputField
+                  label="Email Address"
                   name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg text-lg focus:ring-2 focus:ring-blue-400"
-                  placeholder="Your Email Address"
-                />
-              </div>
-              <div className="mb-4">
-                <label
-                  htmlFor="username"
-                  className="block text-gray-700 text-lg font-medium"
-                >
-                  Username
-                </label>
-                <input
                   type="text"
-                  id="username"
-                  name="username"
-                  value={formData.username}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg text-lg focus:ring-2 focus:ring-blue-400"
-                  placeholder="Your username"
+                  placeholder="Email Address"
                 />
-              </div>
-              <div className="mb-4">
-                <label
-                  htmlFor="password"
-                  className="block text-gray-700 text-lg font-medium"
-                >
-                  Password
-                </label>
-                <input
-                  type="password"
-                  id="password"
+                <InputField
+                  label="Username"
+                  name="username"
+                  type="text"
+                  placeholder="Username"
+                />
+                <InputField
+                  label="Password"
                   name="password"
-                  value={formData.password}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg text-lg focus:ring-2 focus:ring-blue-400"
-                  placeholder="Your password"
+                  type="password"
+                  placeholder="Password"
                 />
               </div>
             </>
           )}
           {step === 2 && (
             <>
-              <div className="mb-4">
-                <label
-                  htmlFor="dob"
-                  className="block text-gray-700 text-lg font-medium"
-                >
-                  Date of Birth
-                </label>
-                <input
-                  type="text"
-                  id="dob"
+              <div>
+                <UnitToggleButton
+                  unit={formData.unit}
+                  onUnitChange={handleUnitChange}
+                />
+              </div>
+              <div className="space-y-4">
+                <InputField
+                  label="Date of Birth"
                   name="dob"
-                  value={formData.dob}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg text-lg focus:ring-2 focus:ring-blue-400"
-                  placeholder="Your date of birth"
-                />
-              </div>
-              <div className="mb-4">
-                <label
-                  htmlFor="height"
-                  className="block text-gray-700 text-lg font-medium"
-                >
-                  Height
-                </label>
-                <input
                   type="text"
-                  id="height"
-                  name="height"
-                  value={formData.height}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg text-lg focus:ring-2 focus:ring-blue-400"
-                  placeholder="Your height"
+                  placeholder="Date of Birth"
                 />
-                <select
-                  name="heightUnit"
-                  value={formData.unit}
-                  onChange={handleInputChange}
-                  className="px-4 py-2 border-2 border-gray-300 rounded-lg text-lg focus:ring-2 focus:ring-blue-400"
-                >
-                  <option value="metric">cm (Metric)</option>
-                  <option value="imperial">ft (Imperial)</option>
-                </select>
-              </div>
-              <div className="mb-4">
-                <label
-                  htmlFor="weight"
-                  className="block text-gray-700 text-lg font-medium"
-                >
-                  Weight
-                </label>
-                <input
-                  type="text"
-                  id="weight"
-                  name="weight"
-                  value={formData.weight}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg text-lg focus:ring-2 focus:ring-blue-400"
-                  placeholder="Your weight"
-                />
-                <select
-                  name="weightUnit"
-                  value={formData.unit}
-                  onChange={handleInputChange}
-                  className="px-4 py-2 border-2 border-gray-300 rounded-lg text-lg focus:ring-2 focus:ring-blue-400"
-                >
-                  <option value="metric">kg (Metric)</option>
-                  <option value="imperial">lb (Imperial)</option>
-                </select>
+                <div className="flex space-x-4">
+                  <InputUnit
+                    label="Height"
+                    name="height"
+                    type="number"
+                    placeholder="0"
+                    unit={formData.unit}
+                    value={formData.height}
+                    onChange={(e) =>
+                      setFormData({ ...formData, height: e.target.value })
+                    }
+                  />
+                </div>
+                <div className="flex space-x-4">
+                  <InputUnit
+                    label="Weight"
+                    name="weight"
+                    type="number"
+                    placeholder="0"
+                    unit={formData.unit}
+                    value={`${formData.weight}  
+                    ${formData.unit}`}
+                    onChange={(e) =>
+                      setFormData({ ...formData, weight: e.target.value })
+                    }
+                  />
+                </div>
               </div>
             </>
           )}
           {step === 3 && (
-            <div className="mb-4">
-              <label
-                htmlFor="calories"
-                className="block text-gray-700 text-lg font-medium"
-              >
-                Daily Calories Goal
-              </label>
-              <input
-                type="text"
-                id="calories"
+            <div className="space-y-4">
+              <InputField
+                label="Daily Calories Goal"
                 name="calories"
+                type="number"
+                placeholder="Daily Calories Goal"
                 value={formData.calories}
-                onChange={handleInputChange}
-                className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg text-lg focus:ring-2 focus:ring-blue-400"
-                placeholder="Your daily calories goal"
+                onChange={(e) =>
+                  setFormData({ ...formData, lifestyle: e.target.value })
+                }
               />
-            </div>
-          )}
-          {step === 4 && (
-            <div className="mb-4">
-              <label
-                htmlFor="lifestyle"
-                className="block text-gray-700 text-lg font-medium"
-              >
-                Lifestyle
-              </label>
-              <input
-                type="text"
-                id="lifestyle"
-                name="lifestyle"
-                value={formData.lifestyle}
-                onChange={handleInputChange}
-                className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg text-lg focus:ring-2 focus:ring-blue-400"
-                placeholder="Your lifestyle"
+              <SelectField
+                label={"Lifestyle"}
+                options={lifestyleOptions}
+                selectedValue={selectedValue}
+                handleSelectChange={onSelectChange}
               />
             </div>
           )}
@@ -252,10 +163,10 @@ function UserRegistrationModal() {
             <button
               type="submit"
               className={`bg-blue-500 hover:bg-blue-600 text-white font-semibold text-lg py-2 px-6 rounded-lg ${
-                step === 5 ? "" : ""
+                step === 3 ? "" : ""
               }`}
             >
-              {step === 5 ? "Sign Up" : "Next"}
+              {step === 3 ? "Sign Up" : "Next"}
             </button>
           </div>
         </form>
